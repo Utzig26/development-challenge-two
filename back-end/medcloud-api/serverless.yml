@@ -1,7 +1,10 @@
+useDotenv: true
+
 service: medcloud-api
 frameworkVersion: '3'
 
 plugins:
+  - serverless-plugin-typescript
   - serverless-offline
 
 provider:
@@ -15,3 +18,4 @@ functions:
       - httpApi:
           path: /
           method: get
+
