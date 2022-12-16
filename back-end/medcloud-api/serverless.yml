@@ -1,7 +1,10 @@
 useDotenv: true
-
-service: medcloud-api
 frameworkVersion: '3'
+
+service: medcloud-challange-api
+
+custom:
+  tableName: 'patients-table-${sls:stage}'
 
 plugins:
   - serverless-plugin-typescript
@@ -9,7 +12,23 @@ plugins:
 
 provider:
   name: aws
+  region: us-east-1
   runtime: nodejs14.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [ PatientsTable, Arn ]
+  environment:
+    PATIENTS_TABLE: ${self:custom.tableName}
 
 functions:
   hello:
@@ -19,3 +38,18 @@ functions:
           path: /
           method: get
 
+resources:
+  Resources:
+    PatientsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
