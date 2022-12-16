@@ -1,12 +1,15 @@
 
-export async function hello(event, context, callback) {
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: "Go Serverless v3.0! Your function executed successfully!",
-      input: event,
-    }),
-  };
+import express from "express";
+import serverless from "serverless-http";
 
-  callback(null, response);
-}
+const app = express();
+
+app.use(express.json());
+
+app.get("/patients",(req, res) => {
+  res
+    .json("Hello patients!")
+    .status(200);
+});
+
+export const handler = serverless(app);
