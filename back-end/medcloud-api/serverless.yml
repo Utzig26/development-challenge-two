@@ -31,11 +31,11 @@ provider:
     PATIENTS_TABLE: ${self:custom.tableName}
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-      - httpApi:
-          path: /
+  patients: 
+    handler: handler.handler 
+    events: 
+      - http: 
+          path: patients
           method: get
 
 resources:
