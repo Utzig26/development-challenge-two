@@ -44,6 +44,9 @@ functions:
       - http:
           path: patients/{id}
           method: get
+      - http:
+          path: patients/{id}
+          method: delete
   
 
 resources:

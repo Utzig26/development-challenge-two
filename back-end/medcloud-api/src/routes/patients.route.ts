@@ -12,4 +12,7 @@ router.post('/', PatientController.createPatient );
 router.get('/', PatientController.getPatients);
 router.get('/:id', PatientController.getPatient);
 
+router.delete('/:id', PatientController.deletePatient);
+
+
 export default router;

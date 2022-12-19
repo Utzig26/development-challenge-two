@@ -17,5 +17,10 @@ async function createPatient(patient:CreatePatientDto) {
   return await PatientModel.create(patient);
 }
 
+async function deletePatient(patientId:string) {
+  return await PatientModel.delete(patientId);
+}
 
-export const PatientsService = { getPatient, getPatients, createPatient };
+
+
+export const PatientsService = { getPatient, getPatients, createPatient, deletePatient };

@@ -21,7 +21,7 @@ async function getPatient(req:Request, res:Response, next:NextFunction) {
         message: 'Patient retrieved successfully',
         patient: patient
       })
-      .status(200);
+      .status(200).end();
   } catch (err) {
     next(err);
   }
@@ -45,7 +45,7 @@ async function getPatients(req:Request, res:Response, next:NextFunction) {
         amount: patients.length,
         patients: patients
       })
-      .status(200);
+      .status(200).end();
   } catch (err) {
     next(err);
   }
@@ -60,11 +60,36 @@ async function createPatient(req:Request, res:Response, next:NextFunction) {
           message: 'Patient created successfully',
           patient: newPatient
         })
-      .status(201);
+      .status(201).end();
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function deletePatient(req:Request, res:Response, next:NextFunction) {
+  const patientId = req.params.id;
+  
+  try{
+    const patient = await PatientsService.getPatient(patientId);
+    if(!patient) {
+      return res
+        .json({
+          message: 'Patient not found'
+        })
+        .status(404).end();
+    }
+
+    await PatientsService.deletePatient(patientId);
+    res
+      .json({
+        message: 'Patient deleted successfully',
+        patient: patient
+      })
+      .status(200).end();
   } catch (err) {
     next(err);
   }
 }
 
 
-export const PatientController = { getPatient, getPatients, createPatient };
+export const PatientController = { getPatient, getPatients, createPatient, deletePatient };
