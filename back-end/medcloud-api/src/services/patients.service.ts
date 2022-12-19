@@ -8,4 +8,8 @@ async function createPatient(patient:CreatePatientDto) {
   return await PatientModel.create(patient);
 }
 
-export const PatientsService = { createPatient };
+async function getPatient(patientId:string) {
+  return await PatientModel.get(patientId);
+}
+
+export const PatientsService = { createPatient, getPatient };

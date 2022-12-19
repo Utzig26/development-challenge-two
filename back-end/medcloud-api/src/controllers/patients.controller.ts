@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction} from 'express';
 
 import { PatientsService } from '../services/patients.service';
 import { CreatePatientDto } from '../dtos/createPatient.dto';
 
-async function createPatient(req:Request, res:Response) {
+async function createPatient(req:Request, res:Response, next:NextFunction) {
   const patientDTO: CreatePatientDto = req.body;
   try{
     const newPatient = await PatientsService.createPatient(patientDTO);
@@ -14,10 +14,33 @@ async function createPatient(req:Request, res:Response) {
         })
       .status(201);
   } catch (err) {
-    res
-      .json({ message: err.message })
-      .status(400);
+    next(err);
   }
 }
 
-export const PatientController = { createPatient };
+async function getPatient(req:Request, res:Response, next:NextFunction) {
+  const patientId = req.params.id;
+  try{
+    const patient = await PatientsService.getPatient(patientId);
+
+    if(!patient) {
+      return res
+        .json({
+          message: 'Patient not found'
+        })
+        .status(404).end();
+    }
+
+    res
+      .json({
+        message: 'Patient retrieved successfully',
+        patient: patient
+      })
+      .status(200);
+  } catch (err) {
+    next(err);
+  }
+}
+
+
+export const PatientController = { createPatient, getPatient};

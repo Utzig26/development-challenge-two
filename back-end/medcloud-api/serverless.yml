@@ -38,6 +38,10 @@ functions:
       - http: 
           path: patients
           method: post
+      - http:
+          path: patients/{id}
+          method: get
+  
 
 resources:
   Resources:
