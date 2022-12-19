@@ -9,7 +9,7 @@ const router = express.Router({ mergeParams: true });
 router.post('/', ValidadeDtoMiddleware(CreatePatientDto));
 router.post('/', PatientController.createPatient );
 
+router.get('/', PatientController.getPatients);
 router.get('/:id', PatientController.getPatient);
-
 
 export default router;

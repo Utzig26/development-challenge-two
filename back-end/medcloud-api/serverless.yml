@@ -39,6 +39,9 @@ functions:
           path: patients
           method: post
       - http:
+          path: patients
+          method: get
+      - http:
           path: patients/{id}
           method: get
   
