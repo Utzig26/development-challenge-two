@@ -1,15 +1,12 @@
-import express from "express";
+import express from 'express';
 
-const router = express.Router();
+import { PatientController } from "../controllers/patients.controller";
+import { ValidadeDtoMiddleware } from '../middlewares/validateDto.middleware';
+import { CreatePatientDto } from '../dtos/createPatient.dto';
 
-// Patients routes
-router.route('/patients')
-  .get()
-  .post();
+const router = express.Router({ mergeParams: true });
 
-router.route('/patients/:id')
-  .get()
-  .put()
-  .delete();
+router.post('/', ValidadeDtoMiddleware(CreatePatientDto));
+router.post('/', PatientController.createPatient );
 
 export default router;

@@ -1,15 +1,12 @@
 
-import express from "express";
-import serverless from "serverless-http";
+import express, { Express, Request, Response, NextFunction } from 'express';
 
-const app = express();
+import serverless from "serverless-http";
+import patientsRouter from "./src/routes/patients.route";
+
+const app: Express = express();
 
 app.use(express.json());
-
-app.get("/patients",(req, res) => {
-  res
-    .json("Hello patients!")
-    .status(200);
-});
+app.use('/patients', (req: Request, res: Response, next: NextFunction) => { patientsRouter(req, res, next) });
 
 export const handler = serverless(app);
