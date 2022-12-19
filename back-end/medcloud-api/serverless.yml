@@ -29,6 +29,7 @@ provider:
             - Fn::GetAtt: [ PatientsTable, Arn ]
   environment:
     PATIENTS_TABLE: ${self:custom.tableName}
+    STAGE: ${sls:stage}
 
 functions:
   patients: 
@@ -36,7 +37,7 @@ functions:
     events: 
       - http: 
           path: patients
-          method: get
+          method: post
 
 resources:
   Resources:
