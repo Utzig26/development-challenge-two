@@ -47,8 +47,13 @@ functions:
       - http:
           path: patients/{id}
           method: delete
+      - http:
+          path: patients/{id}
+          method: patch
+      - http:
+          path: patients/{id}
+          method: put
   
-
 resources:
   Resources:
     PatientsTable:
