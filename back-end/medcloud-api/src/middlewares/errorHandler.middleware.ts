@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
-export function ErrorHandlerMiddleware(err: Error, req: Request, res: Response) {
-  res.status(500).json({ message: err });
+export function ErrorHandlerMiddleware(err: Error, req: Request, res: Response, next: NextFunction) {
+  res.status(500).send({ message: err.message });
 }
