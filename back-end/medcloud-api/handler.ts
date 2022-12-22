@@ -1,9 +1,9 @@
 
 import express, { Express, Request, Response, NextFunction } from 'express';
-
-import { ErrorHandlerMiddleware } from "./src/middlewares/errorHandler.middleware";
 import serverless from "serverless-http";
-import patientsRouter from "./src/routes/patients.route";
+
+import { ErrorHandlerMiddleware } from "./src/middlewares/errorHandler.middleware.js"
+import { patientsRouter } from "./src/routes/patients.route.js";
 
 const app: Express = express();
 

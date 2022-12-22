@@ -1,24 +1,24 @@
 import express from 'express';
 
-import { PatientController } from "../controllers/patients.controller";
-import { ValidadeDtoMiddleware } from '../middlewares/validateDto.middleware';
-import { PatientDto } from '../dtos/patient.dto';
-import { PartialPatientDto } from '../dtos/partialPatient.dto';
+import { PatientController } from "../controllers/patients.controller.js";
+import { ValidadeDtoMiddleware } from '../middlewares/validateDto.middleware.js';
+import { PatientDto } from '../dtos/patient.dto.js';
+import { PartialPatientDto } from '../dtos/partialPatient.dto.js';
 
-const router = express.Router({ mergeParams: true });
+const patientsRouter = express.Router({ mergeParams: true });
 
-router.post('/', ValidadeDtoMiddleware(PatientDto));
-router.post('/', PatientController.createPatient );
+patientsRouter.post('/', ValidadeDtoMiddleware(PatientDto));
+patientsRouter.post('/', PatientController.createPatient );
 
-router.get('/', PatientController.getPatients);
-router.get('/:id', PatientController.getPatient);
+patientsRouter.get('/', PatientController.getPatients);
+patientsRouter.get('/:id', PatientController.getPatient);
 
-router.delete('/:id', PatientController.deletePatient);
+patientsRouter.delete('/:id', PatientController.deletePatient);
 
-router.patch('/:id', ValidadeDtoMiddleware(PartialPatientDto));
-router.patch('/:id', PatientController.patchPatient);
+patientsRouter.patch('/:id', ValidadeDtoMiddleware(PartialPatientDto));
+patientsRouter.patch('/:id', PatientController.patchPatient);
 
-router.put('/:id', ValidadeDtoMiddleware(PatientDto));
-router.put('/:id', PatientController.putPatient);
+patientsRouter.put('/:id', ValidadeDtoMiddleware(PatientDto));
+patientsRouter.put('/:id', PatientController.putPatient);
 
-export default router;
+export{ patientsRouter };

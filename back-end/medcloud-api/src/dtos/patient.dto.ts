@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Type } from 'class-transformer';
 import { IsDateString, IsEmail, IsString, MinLength, ValidateNested } from 'class-validator';
 
-import { AddressDto } from './address.dto';
+import { AddressDto } from './address.dto.js';
 
 export class PatientDto {
   @IsString()

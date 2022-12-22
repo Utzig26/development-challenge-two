@@ -1,7 +1,7 @@
 import { IsOptional } from 'class-validator';
 
-import { AddressDto } from './address.dto';
-import { PatientDto } from './patient.dto';
+import { AddressDto } from './address.dto.js';
+import { PatientDto } from './patient.dto.js';
 
 export class PartialPatientDto extends PatientDto {
   @IsOptional()
