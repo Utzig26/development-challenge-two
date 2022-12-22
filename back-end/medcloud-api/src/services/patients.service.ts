@@ -1,8 +1,8 @@
 import { PatientDto } from "../dtos/patient.dto";
-import { PartialPatientDto } from "../dtos/partialPatient.dto";
-
-import { PatientModel } from "../models/patient.model";
 import { v4 as uuidv4 } from "uuid";
+
+import { PartialPatientDto } from "../dtos/partialPatient.dto.js";
+import { PatientModel } from "../models/patient.model.js";
 
 
 async function getPatient(patientId:string) {

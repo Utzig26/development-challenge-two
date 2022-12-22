@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction} from 'express';
+import { Request, Response, NextFunction, ErrorRequestHandler} from 'express';
 
-import { PatientsService } from '../services/patients.service';
-import { PatientDto } from '../dtos/patient.dto';
-import { PartialPatientDto } from '../dtos/partialPatient.dto';
+import { PatientsService } from '../services/patients.service.js';
+import { PatientDto } from '../dtos/patient.dto.js';
+import { PartialPatientDto } from '../dtos/partialPatient.dto.js';
 
 // set default values for limit
 const DEFAULT_LIMIT = 10;
@@ -10,13 +10,10 @@ const DEFAULT_LIMIT = 10;
 // Find patient by id and return it or return 404
 async function findPatient(patientId: string, res:Response) {
   const patient = await PatientsService.getPatient(patientId);
-  if(!patient) 
-    res
-      .json({
-        message: 'Patient not found'
-      })
-      .status(404).end();
-  else
+  if(!patient){
+    res.status(404);
+    throw new Error("Patient not found");
+  }else
     return patient;
 }
 
@@ -90,7 +87,8 @@ async function patchPatient(req:Request, res:Response, next:NextFunction) {
   const patientId = req.params.id;
   const patientDTO:PartialPatientDto = req.body;
   try{
-    await findPatient(patientId, res)
+    await findPatient(patientId, res);
+
     const patchedPatient = await PatientsService.patchPatient(patientId, patientDTO);
     res
       .json({
@@ -107,7 +105,7 @@ async function putPatient(req:Request, res:Response, next:NextFunction) {
   const patientId = req.params.id;
   const patientDTO:PatientDto = req.body;
   try{
-    await findPatient(patientId, res)
+    await findPatient(patientId, res);
     const updatedPatient = await PatientsService.updatePatient(patientId, patientDTO);
     res
       .json({
