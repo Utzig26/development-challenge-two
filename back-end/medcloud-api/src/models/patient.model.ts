@@ -1,6 +1,7 @@
 import * as Dynamoose from 'dynamoose';
+import { SchemaDefinition } from 'dynamoose/dist/Schema';
 
-const PatientSchema = new Dynamoose.Schema({
+const PatientSchema:SchemaDefinition = {
   id: {
     type: String,
     hashKey: true,
@@ -49,13 +50,13 @@ const PatientSchema = new Dynamoose.Schema({
       },
     },
   },
-});
+};
 
 function getPatientsTableEnvVar() {
   if (!process.env.PATIENTS_TABLE) {
     throw new Error('PATIENTS_TABLE env var is not defined');
   }
-  return process.env.PATIENTS_TABLE;
+    return process.env.PATIENTS_TABLE;
 }
 
 export const PatientModel = Dynamoose.model(
