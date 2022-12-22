@@ -1,15 +1,15 @@
 
-import express from "express";
-import serverless from "serverless-http";
+import express, { Express, Request, Response, NextFunction } from 'express';
 
-const app = express();
+import { ErrorHandlerMiddleware } from "./src/middlewares/errorHandler.middleware";
+import serverless from "serverless-http";
+import patientsRouter from "./src/routes/patients.route";
+
+const app: Express = express();
 
 app.use(express.json());
+app.use('/patients', (req: Request, res: Response, next: NextFunction) => { patientsRouter(req, res, next) });
 
-app.get("/patients",(req, res) => {
-  res
-    .json("Hello patients!")
-    .status(200);
-});
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => { ErrorHandlerMiddleware(err, req, res, next) });
 
 export const handler = serverless(app);

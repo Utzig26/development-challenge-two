@@ -1,26 +1,10 @@
 import 'reflect-metadata';
 import { Type } from 'class-transformer';
-import { IsDateString, IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsDateString, IsEmail, IsString, MinLength, ValidateNested } from 'class-validator';
 
-class Address {
-  @IsString()
-  @IsNotEmpty()
-  public street: string;
+import { AddressDto } from './address.dto';
 
-  @IsString()
-  @IsNotEmpty()
-  public city: string;
-
-  @IsString()
-  @IsNotEmpty()
-  public state: string;
-
-  @IsString()
-  @IsNotEmpty()
-  public zip: string;
-}
-
-export class CreatePatientDto {
+export class PatientDto {
   @IsString()
   @MinLength(2, {message: 'First name should be at least 2 characters long'})
   public firstName: string;
@@ -36,6 +20,7 @@ export class CreatePatientDto {
   @IsDateString()
   public birthDate: string;
 
-  @Type(() => Object)
-  public address: Address;
+  @ValidateNested()
+  @Type(() => AddressDto)
+  public address: AddressDto;
 };

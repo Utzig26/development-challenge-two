@@ -38,7 +38,22 @@ functions:
       - http: 
           path: patients
           method: post
-
+      - http:
+          path: patients
+          method: get
+      - http:
+          path: patients/{id}
+          method: get
+      - http:
+          path: patients/{id}
+          method: delete
+      - http:
+          path: patients/{id}
+          method: patch
+      - http:
+          path: patients/{id}
+          method: put
+  
 resources:
   Resources:
     PatientsTable:
