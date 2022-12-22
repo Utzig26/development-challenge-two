@@ -58,7 +58,6 @@ function getPatientsTableEnvVar() {
   return process.env.PATIENTS_TABLE;
 }
 
-const PATIENTS_TABLE = process.env.PATIENTS_TABLE || 'Patients';
 export const PatientModel = Dynamoose.model(
   getPatientsTableEnvVar(),
   PatientSchema
