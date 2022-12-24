@@ -19,6 +19,7 @@ interface PatientState {
   error: boolean;
   loading: boolean;
   snackBar: boolean;
+  lastKey: string;
   message: string;
   patients: Patient[];
   perPage: number;

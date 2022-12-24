@@ -1,5 +1,5 @@
 import api from "./http-common";
-import { isError, isLoading, isSnackBar, setMessage, setPatients, filterPatients } from '../store/patient.slice';
+import { isError, isLoading, isSnackBar, setLastKey, setMessage, setPatients, filterPatients } from '../store/patient.slice';
 
 function errorHandler(dispatch: Function, err: any) {
   dispatch(isError(true));
@@ -15,7 +15,8 @@ class PatientDataService {
     dispatch(isLoading(true)); 
     
     try {
-      const {patients} = (await api.get('/patients', {params:{ limit: limit, startAt: startAt }})).data;
+      const {lastKey, patients} = (await api.get('/patients', {params:{ limit: limit, startAt: startAt }})).data;
+      dispatch(setLastKey(lastKey));
       dispatch(setPatients(patients));
       dispatch(isError(false));
     } catch (err) {
