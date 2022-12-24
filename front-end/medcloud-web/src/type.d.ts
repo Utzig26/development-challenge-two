@@ -20,5 +20,6 @@ interface PatientState {
   loading: boolean;
   message: string;
   patients: Patient[];
+  perPage: number;
 }
 

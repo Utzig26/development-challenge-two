@@ -1,14 +1,12 @@
 
 import ThemeProvider from '@mui/material/styles/ThemeProvider'
 import theme from './components/theme'
-import Header from './components/Header'
-import { PatientList } from './components/PatientsList';
+import Home from './pages/Home'
 function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Header />
-        <PatientList />
+        <Home />
       </ThemeProvider>
     </>
   );
