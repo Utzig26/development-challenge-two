@@ -4,7 +4,7 @@ import { PatientRow, PatientToRow} from "../PatientRow";
 import patientsService from "../../api/patients.service";
 import React from "react";
 import './style.css';
-import { PatientTableRowPlaceHolder } from "./PatientTableRowPlaceHolder";
+import { PatientTableRowPlaceHolder } from "../PatientRow/PatientTableRowPlaceHolder";
 
 export function PatientList() {
   const patients = useAppSelector(state => state.patients)
@@ -28,7 +28,7 @@ export function PatientList() {
         </TableHead>
         <TableBody>
           {patients.loading? (
-            [...Array(patients.perPage)].map(() => <PatientTableRowPlaceHolder />)
+            [...Array(patients.perPage)].map((e, i) => <PatientTableRowPlaceHolder key={i} />)
           ):patients.error? (
             <PatientTableRowPlaceHolder />
           ):(

@@ -1,37 +1,83 @@
 import api from "./http-common";
-import { isError, isLoading, setMessage, setPatients } from '../store/patient.slice';
+import { isError, isLoading, setMessage, setPatients, filterPatients } from '../store/patient.slice';
+
+function errorHandler(dispatch: Function, err: any) {
+  dispatch(isError(true));
+  (err instanceof Error)?
+  dispatch(setMessage(err.message)):
+  dispatch(setMessage('Unknown error'));
+}
+
 class PatientDataService {
   async getAll(dispatch: Function, limit?: number, startAt?: string) {
-    
     dispatch(isLoading(true)); 
     
     try {
       const {patients} = (await api.get('/patients', {params:{ limit: limit, startAt: startAt }})).data;
       dispatch(setPatients(patients));
-
+      dispatch(setMessage('Patients retrieved successfully'));
+      dispatch(isError(false));
     } catch (err) {
-      dispatch(isError(true));
-      (err instanceof Error)?
-        dispatch(setMessage(err.message)):
-        dispatch(setMessage('Unknown error'));
-
-    } finally { dispatch(isLoading(false)); }
+      errorHandler(dispatch, err);
+    } finally { 
+      dispatch(isLoading(false)); 
+    }
   }
 
-  get(id: string) {
-    return api.get(`/patients/${id}`);
+  async get(dispatch: Function, id: string) {
+    dispatch(isLoading(true));
+
+    try {
+      const {patient} = (await api.get(`/patients/${id}`)).data;
+      dispatch(setPatients([patient]));
+      dispatch(setMessage('Patient retrieved successfully'));
+      dispatch(isError(false));
+    } catch(err){ 
+      errorHandler(dispatch, err); 
+    } finally { 
+      dispatch(isLoading(false)); 
+    }
   }
 
-  create(data: Patient) {
-    return api.post("/patients", data);
+  async create(dispatch: Function, data: Patient) {
+    dispatch(isLoading(true)); 
+    try{ 
+      const {patient} = (await api.post('/patients', data)).data;
+      dispatch(setPatients([patient]));
+      dispatch(setMessage('Patient created successfully'));
+      dispatch(isError(false));
+    } catch(err){
+      errorHandler(dispatch, err);
+    } finally{
+      dispatch(isLoading(false)); 
+    }
   }
 
-  update(id: string, data: Patient) {
-    return api.put(`/patients/${id}`, data);
+  async update(dispatch: Function, id: string, data: Patient) {
+    try{
+      const {patient} = (await api.put(`/patients/${id}`, data)).data;
+      dispatch(setPatients([patient]));
+      dispatch(setMessage('Patient updated successfully'));
+      dispatch(isError(false));
+    } catch(err){
+      errorHandler(dispatch, err);
+    } finally{
+      dispatch(isLoading(false)); 
+    }
   }
 
-  delete(id: string) {
-    return api.delete(`/patients/${id}`);
+  async delete(dispatch: Function, id: string) {
+    dispatch(isLoading(true)); 
+    try{
+      await api.delete(`/patients/${id}`);
+      dispatch(setMessage('Patient deleted successfully'));
+      dispatch(filterPatients(id));
+      dispatch(isError(false));
+    } catch(err){
+      errorHandler(dispatch, err);
+    } finally{ 
+      dispatch(isLoading(false)); 
+    }
   }
 }
 
