@@ -1,0 +1,9 @@
+.logo-icon{
+  max-width: 200px;
+}
+
+.header-body{
+  padding: 0.6rem;
+  display: flex;
+  justify-content: center;
+}
