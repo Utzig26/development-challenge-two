@@ -4,7 +4,8 @@ const patientInit:PatientState = {
   loading: false,
   error: false,
   message: '',
-  patients: []
+  patients: [],
+  perPage: 1,
 }
 
 export const patientSlice = createSlice({
@@ -22,10 +23,13 @@ export const patientSlice = createSlice({
     },
     setPatients: (state:PatientState, action:PayloadAction<Patient[]>) => {
       state.patients = action.payload
+    },
+    setPerPage: (state:PatientState, action:PayloadAction<number>) => {
+      state.perPage = action.payload
     }
   }
 })
 
-export const { isLoading, isError, setMessage, setPatients} = patientSlice.actions
+export const { isLoading, isError, setMessage, setPatients, setPerPage} = patientSlice.actions
 
 export default patientSlice.reducer
