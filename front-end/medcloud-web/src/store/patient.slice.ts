@@ -1,27 +1,31 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-const patientZero:PatientState = {
+const patientInit:PatientState = {
   loading: false,
   error: false,
-  message: ''
+  message: '',
+  patients: []
 }
 
 export const patientSlice = createSlice({
   name: 'patient',
-  initialState: patientZero,
+  initialState: patientInit,
   reducers: {
-    setLoading: (state:PatientState, action:PayloadAction<boolean>) => {
+    isLoading: (state:PatientState, action:PayloadAction<boolean>) => {
       state.loading = action.payload
     },
-    setError: (state:PatientState, action:PayloadAction<boolean>) => {
+    isError: (state:PatientState, action:PayloadAction<boolean>) => {
       state.error = action.payload
     },
     setMessage: (state:PatientState, action:PayloadAction<string>) => {
       state.message = action.payload
+    },
+    setPatients: (state:PatientState, action:PayloadAction<Patient[]>) => {
+      state.patients = action.payload
     }
   }
 })
 
-export const { setLoading, setError, setMessage } = patientSlice.actions
+export const { isLoading, isError, setMessage, setPatients} = patientSlice.actions
 
 export default patientSlice.reducer

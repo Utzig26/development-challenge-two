@@ -19,5 +19,6 @@ interface PatientState {
   error: boolean;
   loading: boolean;
   message: string;
+  patients: Patient[];
 }
 

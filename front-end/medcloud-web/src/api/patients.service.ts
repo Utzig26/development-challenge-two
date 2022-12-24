@@ -1,8 +1,21 @@
 import api from "./http-common";
-
+import { isError, isLoading, setMessage, setPatients } from '../store/patient.slice';
 class PatientDataService {
-  async getAll() {
-    return await api.get("/patients");
+  async getAll(dispatch: Function, limit?: number, startAt?: string) {
+    
+    dispatch(isLoading(true)); 
+    
+    try {
+      const {patients} = (await api.get('/patients', {params:{ limit: limit, startAt: startAt }})).data;
+      dispatch(setPatients(patients));
+
+    } catch (err) {
+      dispatch(isError(true));
+      (err instanceof Error)?
+        dispatch(setMessage(err.message)):
+        dispatch(setMessage('Unknown error'));
+
+    } finally { dispatch(isLoading(false)); }
   }
 
   get(id: string) {
