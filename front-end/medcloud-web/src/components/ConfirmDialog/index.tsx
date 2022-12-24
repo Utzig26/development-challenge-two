@@ -12,14 +12,14 @@ const ConfirmDialog = (props: any) => {
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button
-          variant="contained"
+          variant="outlined"
           onClick={() => setOpen(false)}
-          color="secondary"
         >
           No
         </Button>
         <Button
           variant="contained"
+          color="error"
           onClick={() => {
             setOpen(false);
             onConfirm();

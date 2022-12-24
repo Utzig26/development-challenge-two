@@ -3,9 +3,10 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 const patientInit:PatientState = {
   loading: false,
   error: false,
+  snackBar: false,
   message: '',
   patients: [],
-  perPage: 5,
+  perPage: 5
 }
 
 export const patientSlice = createSlice({
@@ -18,6 +19,9 @@ export const patientSlice = createSlice({
     isError: (state:PatientState, action:PayloadAction<boolean>) => {
       state.error = action.payload
     },
+    isSnackBar: (state:PatientState, action:PayloadAction<boolean>) => {
+      state.snackBar = action.payload
+    },
     setMessage: (state:PatientState, action:PayloadAction<string>) => {
       state.message = action.payload
     },
@@ -29,11 +33,10 @@ export const patientSlice = createSlice({
     },
     filterPatients: (state:PatientState, action:PayloadAction<string>) => {
       state.patients = state.patients.filter((patient) => patient.id !== action.payload)
-
     }
   }
 })
 
-export const { isLoading, isError, setMessage, setPatients, setPerPage, filterPatients} = patientSlice.actions
+export const { isLoading, isError, isSnackBar, setMessage, setPatients, setPerPage, filterPatients} = patientSlice.actions
 
 export default patientSlice.reducer
