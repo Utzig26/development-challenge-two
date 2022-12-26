@@ -10,7 +10,7 @@ interface Patient {
   id: string;
   firstName: string;
   lastName: string;
-  birthDate: Date;
+  birthDate: string;
   address: address;
   email: string;
 }
@@ -22,6 +22,7 @@ interface PatientState {
   lastKey: string;
   message: string;
   patients: Patient[];
+  patient: Patient | undefined;
   perPage: number;
 }
 

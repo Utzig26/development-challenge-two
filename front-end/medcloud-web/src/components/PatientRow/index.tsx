@@ -6,16 +6,16 @@ import UserIcon from '@mui/icons-material/Person';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Create';
 import patientsService from "../../api/patients.service";
-import './style.css';
+import { setPatient } from "../../store/patient.slice";
+
 import { useAppDispatch } from "../../hooks";
 import ConfirmDialog from "../ConfirmDialog";
 import PatientDialog from "../PatientDialog";
 
-export function PatientRow(props: {row: Patient}){
-  const { row } = props;
+export function PatientRow(props: {row: Patient, openPatientDialog: boolean, setopenPatientDialog: Function} ){
+  const { row, openPatientDialog, setopenPatientDialog} = props;
   const [open, setOpen] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
-  const [openPatientDialog, setopenPatientDialog] = React.useState(false);
   const dispatch = useAppDispatch();
 
   return (
@@ -26,12 +26,12 @@ export function PatientRow(props: {row: Patient}){
             <UserIcon />
           </Avatar>
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell align="center"> 
           {row.firstName + ' ' + row.lastName}
         </TableCell>
-        <TableCell align="center">{(new Date().getFullYear() - new Date(row.birthDate).getFullYear())}</TableCell>
+        <TableCell align="center" >{(new Date().getFullYear() - new Date(row.birthDate).getFullYear())}</TableCell>
         <TableCell align="center">{row.email}</TableCell>
-        <TableCell>
+        <TableCell align="center">
           <IconButton
             aria-label="expand row"
             size="small"
@@ -80,7 +80,10 @@ export function PatientRow(props: {row: Patient}){
                 </ConfirmDialog>
                 <Tooltip title="Edit">
                   <IconButton color="secondary"
-                    onClick={() => setopenPatientDialog(true)}
+                    onClick={() => {
+                      dispatch(setPatient(row));
+                      setopenPatientDialog(true)}
+                    }
                   >
                     <EditIcon />
                   </IconButton>
@@ -88,13 +91,7 @@ export function PatientRow(props: {row: Patient}){
                 <PatientDialog
                   open={openPatientDialog}
                   setOpen={setopenPatientDialog}
-                  patient={row}
-                  onConfirm={() => {
-                    patientsService.delete(dispatch, row.id);
-                  }}
-                >
-                  Are you sure you want to delete this patient?
-                </PatientDialog>
+                />
               </Stack>
             </Box>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

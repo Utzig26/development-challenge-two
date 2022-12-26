@@ -3,23 +3,39 @@ import { useFormik, getIn} from "formik"
 import PatientSchema from "../../schemas/patient.schema"
 import patientsService from "../../api/patients.service";
 import { useAppDispatch } from "../../hooks";
+import { useAppSelector } from "../../hooks";
+const blankPatient:Patient = {
+  id: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  birthDate: (new Date(Date.now()).toISOString().split('T')[0]),
+  address: {
+    street: '',
+    city: '',
+    state: '',
+    zip: ''
+  }
+}
 
-const PatientForm = (props: {patient: Patient, setOpen?:Function}) => {
-  const {patient, setOpen} = props;
+const PatientForm = (props: {setOpen?:Function}) => {
+  const {setOpen} = props;
+  const patient = useAppSelector(state => state.patients.patient);
+  console.log(blankPatient?.birthDate);
   const dispatch = useAppDispatch();
   const validation = useFormik({
     validateOnChange: true,
     validateOnBlur: true,
     validationSchema: PatientSchema,
-    initialValues: patient,
-    onSubmit: (values) => { 
+    initialValues: patient? patient: blankPatient,
+    onSubmit: (values) => {
       patient? 
         patientsService.update(dispatch, patient.id, values):
         patientsService.create(dispatch, values);
       setOpen?
         setOpen(false):
         null;
-    }
+    },
   })
   
   return(

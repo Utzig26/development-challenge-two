@@ -1,17 +1,21 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import PatientForm from "../PatientForm";
 const PatientDialog = (props: any) => {
-  const { open, setOpen, onConfirm, patient } = props;
+  const { open, setOpen } = props;
   return (
     <Dialog
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={
+        () => {
+          setOpen(false);
+          props = null;
+        } 
+      }
       aria-labelledby="patient-form"
     >
       <DialogTitle id="patient-form"></DialogTitle>
       <DialogContent>
         <PatientForm 
-          patient={patient}
           setOpen={setOpen}
         />
       </DialogContent>

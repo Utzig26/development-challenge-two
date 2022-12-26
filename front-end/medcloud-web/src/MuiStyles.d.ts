@@ -6,7 +6,7 @@ import {
 
 declare module "@mui/material/styles" {
   interface PaletteOptions {
-    complementary: PaletteColorOptions;
+    complementary?: PaletteColorOptions;
   }
 }
 declare module "@mui/material/AppBar" {

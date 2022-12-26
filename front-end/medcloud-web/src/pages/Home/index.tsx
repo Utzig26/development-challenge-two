@@ -1,10 +1,9 @@
 import React from 'react';
-import { Alert, CircularProgress, Snackbar } from '@mui/material';
+import { Alert, CircularProgress, Grid, Snackbar } from '@mui/material';
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Header from '../../components/Header'
 import { PatientList } from '../../components/PatientsList';
 
-import './style.css';
 import { isError, isSnackBar, setMessage } from '../../store/patient.slice';
 import patientsService from '../../api/patients.service';
 
@@ -16,10 +15,12 @@ function Home() {
   }, []);
   
   return (
-    <React.Fragment>
+    <>
       <Header />
-      <div className='page-body'> 
-        <PatientList />
+      <Grid container justifyContent={"center"}> 
+        <Grid item xs={10} md={9} lg={8} xl={7}>
+          <PatientList />
+        </Grid>
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           color="primary"
@@ -47,8 +48,8 @@ function Home() {
             {patients.message}
           </Alert>
         </Snackbar>
-      </div>
-    </React.Fragment>
+      </Grid>
+    </>
   );
 }
 

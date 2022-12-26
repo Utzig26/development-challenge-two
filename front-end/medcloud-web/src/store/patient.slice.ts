@@ -7,7 +7,8 @@ const patientInit:PatientState = {
   lastKey: '',
   message: '',
   patients: [],
-  perPage: 5
+  perPage: 5,
+  patient: undefined
 }
 
 export const patientSlice = createSlice({
@@ -30,7 +31,17 @@ export const patientSlice = createSlice({
       state.message = action.payload
     },
     setPatients: (state:PatientState, action:PayloadAction<Patient[]>) => {
-      state.patients = state.patients.concat(action.payload)
+      const newPatients = state.patients
+      action.payload.forEach((patient) => {
+        const index = newPatients.findIndex((p) => p.id === patient.id)
+        if (index === -1) {
+          newPatients.push(patient)
+        }
+      })
+      state.patients = newPatients
+    },
+    setPatient: (state:PatientState, action:PayloadAction<Patient | undefined>) => {
+      state.patient = action.payload
     },
     setPerPage: (state:PatientState, action:PayloadAction<number>) => {
       state.perPage = action.payload
@@ -55,7 +66,8 @@ export const {
   isSnackBar, 
   setLastKey, 
   setMessage, 
-  setPatients, 
+  setPatients,
+  setPatient,
   setPerPage, 
   filterPatients, 
   updatePatient
