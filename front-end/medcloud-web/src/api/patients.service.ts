@@ -1,5 +1,14 @@
 import api from "./http-common";
-import { isError, isLoading, isSnackBar, setLastKey, setMessage, setPatients, filterPatients } from '../store/patient.slice';
+import { 
+  isError, 
+  isLoading, 
+  isSnackBar, 
+  setLastKey, 
+  setMessage, 
+  setPatients, 
+  filterPatients, 
+  updatePatient 
+} from '../store/patient.slice';
 
 function errorHandler(dispatch: Function, err: any) {
   dispatch(isError(true));
@@ -56,9 +65,13 @@ class PatientDataService {
   }
 
   async update(dispatch: Function, id: string, data: Patient) {
+    dispatch(isLoading(true));
     try{
-      const {patient} = (await api.put(`/patients/${id}`, data)).data;
-      dispatch(setPatients([patient]));
+      const updatePatientData: Partial<Pick<Patient, 'id'>> & Omit<Patient, 'id'> = data;
+      delete updatePatientData.id;
+
+      const {patient} = (await api.put(`/patients/${id}`, updatePatientData)).data;
+      dispatch(updatePatient(patient));
       dispatch(setMessage('Patient updated successfully'));
       dispatch(isSnackBar(true));
       dispatch(isError(false));

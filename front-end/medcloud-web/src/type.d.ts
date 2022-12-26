@@ -1,9 +1,9 @@
 
 interface Address{
-    city: string;
-    state: string;
-    street: string;
-    zip: string;
+  city: string;
+  state: string;
+  street: string;
+  zip: string;
 }
 
 interface Patient {

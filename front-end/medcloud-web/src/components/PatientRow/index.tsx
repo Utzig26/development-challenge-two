@@ -4,27 +4,18 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import React from "react";
 import UserIcon from '@mui/icons-material/Person';
 import DeleteIcon from '@mui/icons-material/Delete';
-import UpdateIcon from '@mui/icons-material/Update';
+import EditIcon from '@mui/icons-material/Create';
 import patientsService from "../../api/patients.service";
 import './style.css';
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch } from "../../hooks";
 import ConfirmDialog from "../ConfirmDialog";
+import PatientDialog from "../PatientDialog";
 
-export function PatientToRow ( patient: Patient ) {
-  const newPatient = {
-    id: patient.id,
-    name: patient.firstName + ' ' + patient.lastName,
-    age: (new Date().getFullYear() - new Date(patient.birthDate).getFullYear()),
-    address: patient.address,
-    email: patient.email
-  }
-  return newPatient;
-}
-
-export function PatientRow(props: { row: ReturnType<typeof PatientToRow> }){
+export function PatientRow(props: {row: Patient}){
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
+  const [openPatientDialog, setopenPatientDialog] = React.useState(false);
   const dispatch = useAppDispatch();
 
   return (
@@ -36,9 +27,9 @@ export function PatientRow(props: { row: ReturnType<typeof PatientToRow> }){
           </Avatar>
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          {row.name}
+          {row.firstName + ' ' + row.lastName}
         </TableCell>
-        <TableCell align="center">{row.age}</TableCell>
+        <TableCell align="center">{(new Date().getFullYear() - new Date(row.birthDate).getFullYear())}</TableCell>
         <TableCell align="center">{row.email}</TableCell>
         <TableCell>
           <IconButton
@@ -87,11 +78,23 @@ export function PatientRow(props: { row: ReturnType<typeof PatientToRow> }){
                 >
                   Are you sure you want to delete this patient?
                 </ConfirmDialog>
-                <Tooltip title="Update">
-                  <IconButton color="info" >
-                    <UpdateIcon />
+                <Tooltip title="Edit">
+                  <IconButton color="secondary"
+                    onClick={() => setopenPatientDialog(true)}
+                  >
+                    <EditIcon />
                   </IconButton>
                 </Tooltip>
+                <PatientDialog
+                  open={openPatientDialog}
+                  setOpen={setopenPatientDialog}
+                  patient={row}
+                  onConfirm={() => {
+                    patientsService.delete(dispatch, row.id);
+                  }}
+                >
+                  Are you sure you want to delete this patient?
+                </PatientDialog>
               </Stack>
             </Box>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

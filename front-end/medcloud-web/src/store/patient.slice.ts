@@ -37,10 +37,28 @@ export const patientSlice = createSlice({
     },
     filterPatients: (state:PatientState, action:PayloadAction<string>) => {
       state.patients = state.patients.filter((patient) => patient.id !== action.payload)
+    },
+    updatePatient: (state:PatientState, action:PayloadAction<Patient>) => {
+      const index = state.patients.findIndex((patient) => patient.id === action.payload.id)
+      if (index !== -1) {
+        const newPatients = state.patients
+        newPatients[index] = action.payload
+        state.patients = newPatients
+      }
     }
   }
 })
 
-export const { isLoading, isError, isSnackBar, setLastKey, setMessage, setPatients, setPerPage, filterPatients} = patientSlice.actions
+export const { 
+  isLoading, 
+  isError, 
+  isSnackBar, 
+  setLastKey, 
+  setMessage, 
+  setPatients, 
+  setPerPage, 
+  filterPatients, 
+  updatePatient
+} = patientSlice.actions
 
 export default patientSlice.reducer

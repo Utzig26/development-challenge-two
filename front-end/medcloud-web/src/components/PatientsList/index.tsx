@@ -2,9 +2,9 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import CreateIcon from '@mui/icons-material/Create';
 import PlusIcon from '@mui/icons-material/Add';
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { PatientRow, PatientToRow} from "../PatientRow";
+import { PatientRow } from "../PatientRow";
 import patientsService from "../../api/patients.service";
-import React from "react";
+
 import './style.css';
 import { PatientTableRowPlaceHolder } from "../PatientRow/PatientTableRowPlaceHolder";
 
@@ -12,10 +12,6 @@ import { PatientTableRowPlaceHolder } from "../PatientRow/PatientTableRowPlaceHo
 export function PatientList() {
   const patients = useAppSelector(state => state.patients)
   const dispatch = useAppDispatch();
-
-  React.useEffect(() => {
-    patientsService.getAll(dispatch, patients.perPage);
-  }, []);
   
   return (
     <TableContainer className="table-container" component={Paper}>
@@ -34,9 +30,9 @@ export function PatientList() {
         <TableBody>
           {(patients.patients.length === 0 && patients.loading)? (
             [...Array(patients.perPage)].map((_, i) => <PatientTableRowPlaceHolder key={i} />)
-          ):patients.patients.length !== 0? (
+          ):patients.patients.length > 0? (
             patients.patients.map((patient) => (
-              <PatientRow key={patient.id} row={PatientToRow(patient)} />
+              <PatientRow key={patient.id} row={patient} />
             ))
           ):(
             <TableRow>
