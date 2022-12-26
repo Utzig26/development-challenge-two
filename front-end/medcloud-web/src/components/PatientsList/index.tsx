@@ -50,10 +50,6 @@ export function PatientList() {
                     <PlusIcon />
                   </IconButton>
                 </Tooltip>
-                <PatientDialog
-                  open={openPatientDialog}
-                  setOpen={setopenPatientDialog}
-                />
               </TableCell>
             </TableRow>
           </TableHead>):(null)
@@ -105,6 +101,10 @@ export function PatientList() {
           }
         </TableBody>
       </Table>
+      <PatientDialog
+        open={openPatientDialog}
+        setOpen={setopenPatientDialog}
+      />
     </TableContainer>
   );
 }
