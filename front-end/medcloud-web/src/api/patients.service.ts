@@ -64,13 +64,12 @@ class PatientDataService {
     }
   }
 
-  async update(dispatch: Function, id: string, data: Patient) {
+  async update(dispatch: Function, id: string, data: Partial<Patient & Omit<Patient, "id">>) {
     dispatch(isLoading(true));
     try{
-      const updatePatientData: Partial<Pick<Patient, 'id'>> & Omit<Patient, 'id'> = data;
-      delete updatePatientData.id;
-
-      const {patient} = (await api.put(`/patients/${id}`, updatePatientData)).data;
+      
+      delete data.id;
+      const {patient} = (await api.put(`/patients/${id}`, data)).data;
       dispatch(updatePatient(patient));
       dispatch(setMessage('Patient updated successfully'));
       dispatch(isSnackBar(true));

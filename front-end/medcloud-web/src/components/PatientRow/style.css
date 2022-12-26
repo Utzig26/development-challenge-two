@@ -1,0 +1,11 @@
+
+ .card-list{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-block: 10px;
+}
+
+.centered-cells > * > *{
+  margin: 0 auto;
+}

@@ -1,14 +1,27 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Tooltip, IconButton, CircularProgress} from "@mui/material";
+import React from "react";
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  Paper, 
+  Button, 
+  Tooltip, 
+  IconButton, 
+  CircularProgress, 
+  Typography
+} from "@mui/material";
 import CreateIcon from '@mui/icons-material/Create';
 import PlusIcon from '@mui/icons-material/Add';
+
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { PatientRow } from "../PatientRow";
-import patientsService from "../../api/patients.service";
-
 import { PatientTableRowPlaceHolder } from "../PatientRow/PatientTableRowPlaceHolder";
-import PatientDialog from "../PatientDialog";
-import React from "react";
+import { PatientDialog } from "../PatientDialog";
 import { setPatient } from "../../store/patient.slice";
+import patientsService from "../../api/patients.service";
 
 
 export function PatientList() {
@@ -28,10 +41,11 @@ export function PatientList() {
               <TableCell align="center"> 
                 <Tooltip title="Create Patient">
                   <IconButton  
-                  color="success" 
-                  onClick={() => {                       
-                    dispatch(setPatient(undefined));
-                    setopenPatientDialog(true)}
+                    color="success" 
+                    onClick={() => {                       
+                      dispatch(setPatient(undefined));
+                      setopenPatientDialog(true)
+                    }
                   }>
                     <PlusIcon />
                   </IconButton>
@@ -54,12 +68,16 @@ export function PatientList() {
           ):(
             <TableRow>
               <TableCell colSpan={5} align="center">
-                <h3> No Patients Found </h3>
-                <Button variant="contained" 
-                color="success" 
-                startIcon={<CreateIcon />}
-                onClick={() => {<PatientDialog />}}
-                >
+                <Typography variant="h3"> No Patients Found </Typography>
+                <Button 
+                  variant="contained" 
+                  color="success" 
+                  startIcon={<CreateIcon />}
+                  onClick={() => {
+                    dispatch(setPatient(undefined));
+                    setopenPatientDialog(true)
+                  }
+                }>
                   Create
                 </Button>
               </TableCell>

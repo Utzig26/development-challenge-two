@@ -1,6 +1,12 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { 
+  Button, 
+  Dialog, 
+  DialogActions, 
+  DialogContent, 
+  DialogTitle 
+} from "@mui/material";
 
-const ConfirmDialog = (props: any) => {
+export function ConfirmDialog(props: any) {
   const { open, setOpen, onConfirm, children } = props;
   return (
     <Dialog
@@ -31,5 +37,3 @@ const ConfirmDialog = (props: any) => {
     </Dialog>
   );
 };
-
-export default ConfirmDialog;

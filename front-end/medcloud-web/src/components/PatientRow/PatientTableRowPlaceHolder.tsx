@@ -1,4 +1,8 @@
-import { Skeleton, TableCell, TableRow } from "@mui/material";
+import { 
+  Skeleton, 
+  TableCell, 
+  TableRow 
+} from "@mui/material";
 import "./style.css"
 
 export function PatientTableRowPlaceHolder() {
@@ -9,13 +13,13 @@ export function PatientTableRowPlaceHolder() {
         <Skeleton variant="circular" width={40} height={40} />
       </TableCell>
       <TableCell align="center">
-        <Skeleton variant="text"  />
+        <Skeleton variant="text" />
       </TableCell>
       <TableCell align="center">
-        <Skeleton variant="text"  width={"50%"}  />
+        <Skeleton variant="text" width={"50%"} />
       </TableCell>
       <TableCell align="center">
-        <Skeleton variant="text"  />
+        <Skeleton variant="text" />
       </TableCell>
       <TableCell />
     </TableRow>

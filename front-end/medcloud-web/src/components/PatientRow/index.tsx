@@ -1,16 +1,28 @@
-import { Avatar, Box, Card, CardContent, Collapse, IconButton, Stack, TableCell, TableRow, Tooltip, Typography } from "@mui/material";
+import React from "react";
+import { 
+  Avatar, 
+  Box,
+  Card,
+  CardContent,
+  Collapse,
+  IconButton,
+  Stack,
+  TableCell,
+  TableRow,
+  Tooltip,
+  Typography
+} from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import React from "react";
 import UserIcon from '@mui/icons-material/Person';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Create';
+
 import patientsService from "../../api/patients.service";
 import { setPatient } from "../../store/patient.slice";
-
 import { useAppDispatch } from "../../hooks";
-import ConfirmDialog from "../ConfirmDialog";
-import PatientDialog from "../PatientDialog";
+import { ConfirmDialog } from "../ConfirmDialog";
+import { PatientDialog } from "../PatientDialog";
 
 export function PatientRow(props: {row: Patient, openPatientDialog: boolean, setopenPatientDialog: Function} ){
   const { row, openPatientDialog, setopenPatientDialog} = props;
@@ -19,7 +31,7 @@ export function PatientRow(props: {row: Patient, openPatientDialog: boolean, set
   const dispatch = useAppDispatch();
 
   return (
-    <React.Fragment>
+    <>
       <TableRow key={row.id} sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell align="center">
           <Avatar>
@@ -29,8 +41,12 @@ export function PatientRow(props: {row: Patient, openPatientDialog: boolean, set
         <TableCell align="center"> 
           {row.firstName + ' ' + row.lastName}
         </TableCell>
-        <TableCell align="center" >{(new Date().getFullYear() - new Date(row.birthDate).getFullYear())}</TableCell>
-        <TableCell align="center">{row.email}</TableCell>
+        <TableCell align="center" >
+          {(new Date().getFullYear() - new Date(row.birthDate).getFullYear())}
+        </TableCell>
+        <TableCell align="center">
+          {row.email}
+        </TableCell>
         <TableCell align="center">
           <IconButton
             aria-label="expand row"
@@ -42,7 +58,7 @@ export function PatientRow(props: {row: Patient, openPatientDialog: boolean, set
         </TableCell>
       </TableRow>
       <TableRow key={row.id+"-collapse"}>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell sx={{paddingBlock:'0px'}} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box className="card-list">
               <Card sx={{ minWidth: 275, maxWidth: 350}}>
@@ -100,6 +116,6 @@ export function PatientRow(props: {row: Patient, openPatientDialog: boolean, set
           </Collapse>
         </TableCell>
       </TableRow>
-    </React.Fragment>
+    </>
   );
 }

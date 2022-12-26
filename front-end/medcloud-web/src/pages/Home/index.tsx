@@ -1,10 +1,14 @@
 import React from 'react';
-import { Alert, CircularProgress, Grid, Snackbar } from '@mui/material';
+import { 
+  Alert, 
+  CircularProgress,
+  Grid, 
+  Snackbar 
+} from '@mui/material';
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import Header from '../../components/Header'
 import { PatientList } from '../../components/PatientsList';
-
 import { isError, isSnackBar, setMessage } from '../../store/patient.slice';
+import { Header } from '../../components/Header'
 import patientsService from '../../api/patients.service';
 
 function Home() {

@@ -1,6 +1,13 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { 
+  Button, 
+  Dialog, 
+  DialogActions,
+  DialogContent, 
+  DialogTitle 
+} from "@mui/material";
 import PatientForm from "../PatientForm";
-const PatientDialog = (props: any) => {
+
+export function PatientDialog (props: { open: boolean, setOpen: Function }) {
   const { open, setOpen } = props;
   return (
     <Dialog
@@ -8,12 +15,11 @@ const PatientDialog = (props: any) => {
       onClose={
         () => {
           setOpen(false);
-          props = null;
         } 
       }
       aria-labelledby="patient-form"
+      id="patient-form"
     >
-      <DialogTitle id="patient-form"></DialogTitle>
       <DialogContent>
         <PatientForm 
           setOpen={setOpen}
@@ -30,5 +36,3 @@ const PatientDialog = (props: any) => {
     </Dialog>
   );
 };
-
-export default PatientDialog;

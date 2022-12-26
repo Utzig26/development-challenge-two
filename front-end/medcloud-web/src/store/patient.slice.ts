@@ -1,4 +1,7 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { 
+  PayloadAction,
+  createSlice 
+} from '@reduxjs/toolkit'
 
 const patientInit:PatientState = {
   loading: false,

@@ -1,9 +1,16 @@
-import { Box, Button, Divider, TextField, Typography } from "@mui/material"
 import { useFormik, getIn} from "formik"
+import { 
+  Box, 
+  Button, 
+  Divider, 
+  TextField, 
+  Typography 
+} from "@mui/material"
+
 import PatientSchema from "../../schemas/patient.schema"
 import patientsService from "../../api/patients.service";
-import { useAppDispatch } from "../../hooks";
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+
 const blankPatient:Patient = {
   id: '',
   firstName: '',
@@ -21,7 +28,6 @@ const blankPatient:Patient = {
 const PatientForm = (props: {setOpen?:Function}) => {
   const {setOpen} = props;
   const patient = useAppSelector(state => state.patients.patient);
-  console.log(blankPatient?.birthDate);
   const dispatch = useAppDispatch();
   const validation = useFormik({
     validateOnChange: true,
@@ -191,7 +197,11 @@ const PatientForm = (props: {setOpen?:Function}) => {
         style={{ width: "200px", margin: "5px" }}
       />
       </Box>
-      <Button type="submit" color="success">
+      <Button 
+        type="submit"
+        color="success"
+        disabled={!validation.dirty}
+        >
         Save
       </Button>
     </form> 

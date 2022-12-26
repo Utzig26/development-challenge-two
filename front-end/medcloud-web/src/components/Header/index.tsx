@@ -1,9 +1,13 @@
-import AppBar from '@mui/material/AppBar';
-import { Box, Toolbar } from '@mui/material';
-import MedCloudSvg from '../../assets/medcloud.svg'
+import {
+  Box, 
+  Toolbar,
+  AppBar,
+} from '@mui/material';
 
+import MedCloudSvg from '../../assets/medcloud.svg'
 import './style.css';
-function Header() {
+
+export function Header() {
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -15,5 +19,3 @@ function Header() {
     </Box>
   );
 }
-
-export default Header;
