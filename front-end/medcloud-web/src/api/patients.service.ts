@@ -24,7 +24,15 @@ class PatientDataService {
     dispatch(isLoading(true)); 
     
     try {
-      const {lastKey, patients} = (await api.get('/patients', {params:{ limit: limit, startAt: startAt }})).data;
+      const {lastKey, patients} = (
+        await api.get('/patients', {
+          params:{ 
+              limit: limit, 
+              startAt: startAt, 
+              _: Date.now()
+            }
+          })
+        ).data;
       dispatch(setLastKey(lastKey));
       dispatch(setPatients(patients));
       dispatch(isError(false));
