@@ -33,21 +33,27 @@ functions:
       - http: 
           path: patients
           method: post
+          cors: true
       - http:
           path: patients
           method: get
+          cors: true
       - http:
           path: patients/{id}
           method: get
+          cors: true
       - http:
           path: patients/{id}
           method: delete
+          cors: true
       - http:
           path: patients/{id}
           method: patch
+          cors: true
       - http:
           path: patients/{id}
           method: put
+          cors: true
   
 resources:
   Resources:
